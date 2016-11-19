@@ -1,10 +1,15 @@
 import lxml.etree as etree
 from config import *
+import os
 
 class XmlWriter:
-    root=etree.Element(PROJECT_NAME)
+    root=None
     def __init__(self):
-        pass
+        if not os.path.exists('gocardless.xml'):
+            XmlWriter.root=etree.Element(PROJECT_NAME)
+        else:
+            tree =etree.parse('gocardless.xml')
+            XmlWriter.root= tree.getroot()
 
     @staticmethod
     def write(path_str):

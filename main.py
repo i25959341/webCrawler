@@ -3,15 +3,10 @@ import threading
 from Queue import Queue
 from crawler import Spider
 import sys
+from config import *
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-PROJECT_NAME='gocardless'
-HOMEPAGE = 'https://gocardless.com/'
-DOMAIN_NAME=getDomainName(HOMEPAGE)
-QUEUE_FILE = PROJECT_NAME + '/queue.txt'
-CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
-NUMBER_OF_THREADS = 3
 threadQueue = Queue()
 Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME)
 
@@ -42,5 +37,5 @@ def crawl():
         createJobs()
 
 createWorkers()
-while True:
+while len(fileToSet(QUEUE_FILE)):
     crawl()
